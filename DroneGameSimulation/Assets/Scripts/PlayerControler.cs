@@ -20,6 +20,8 @@ public class PlayerControler : MonoBehaviour
 
     //UI
     [SerializeField] Image Newtworkrichimage;
+    private float tiltFactor = 5;
+    private float tiltSpeed = 5;
    
 
     // Update is called once per frame
@@ -70,8 +72,7 @@ public class PlayerControler : MonoBehaviour
         Dronecam.transform.rotation = Quaternion.Euler(Dronecam.transform.rotation.x + joystickCam.Vertical * -45, Dronecam.transform.rotation.y + joystickCam.Horizontal * 45   , 0);
     }
 
-private float tiltFactor = 5;
-private float tiltSpeed = 5;
+
     public void DroneMovement()
     {
         var rigidbody = GetComponent<Rigidbody>();
