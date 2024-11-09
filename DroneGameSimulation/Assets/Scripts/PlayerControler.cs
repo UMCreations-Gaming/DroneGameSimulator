@@ -15,31 +15,12 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] GameObject Drone;
 
     //
-   public bool isground;
+    public bool isground;
 
 
     //UI
     [SerializeField] Image Newtworkrichimage;
    
-
-
-
-    void Start()
-    {
-        
-    }
-
-    public void SetStartPoint()
-    {
-
-    }
-
-    public void SetEndPoint()
-    {
-
-    }
-
-
 
     // Update is called once per frame
     void FixedUpdate()
@@ -51,12 +32,10 @@ public class PlayerControler : MonoBehaviour
           
         }*/
          
-            DroneMovement();
-
-        
-            DroneRooation();
-        
+        DroneMovement();
+        DroneRooation();
         Networkrich();
+
         if(joystickCam.Horizontal != 0 || joystickCam.Vertical != 0)
         {
         DroneCamrotation();
@@ -79,8 +58,7 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
-
-
+    
     public void NetwokrichUI(float value)
     {
         Newtworkrichimage.fillAmount = 1 - value;
@@ -92,19 +70,30 @@ public class PlayerControler : MonoBehaviour
         Dronecam.transform.rotation = Quaternion.Euler(Dronecam.transform.rotation.x + joystickCam.Vertical * -45, Dronecam.transform.rotation.y + joystickCam.Horizontal * 45   , 0);
     }
 
+private float tiltFactor = 5;
+private float tiltSpeed = 5;
     public void DroneMovement()
     {
         var rigidbody = GetComponent<Rigidbody>();
         if (!isground)
         {
 
-
          //r L F B
          Vector3 dir = new Vector3(joystickLeft.Horizontal * speed, rigidbody.velocity.y, joystickLeft.Vertical * speed);
          rigidbody.velocity = transform.transform.TransformDirection(dir);
            // Drone.transform.rotation = Quaternion.Euler(Drone.transform.rotation.x, Drone.transform.rotation.y, -joystickLeft.Horizontal*10);
-            
 
+
+           // Movement
+        //Vector3 dir = new Vector3(joystickLeft.Horizontal * speed, rigidbody.velocity.y, joystickLeft.Vertical * speed);
+        //rigidbody.velocity = transform.TransformDirection(dir);
+
+        // Tilt (Rotation)
+        float tiltAmountX = joystickLeft.Vertical * tiltFactor;  // Tilt forward/backward
+        float tiltAmountZ = -joystickLeft.Horizontal * tiltFactor;  // Tilt left/right
+
+        Quaternion targetTilt = Quaternion.Euler(tiltAmountX, transform.eulerAngles.y, tiltAmountZ);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetTilt, Time.deltaTime * tiltSpeed);
 
 
         }
