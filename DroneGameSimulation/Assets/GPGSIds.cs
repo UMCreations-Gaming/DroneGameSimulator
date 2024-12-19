@@ -25,6 +25,8 @@
 public static class GPGSIds
 {
         public const string achievement_100coin = "CgkI8-v75sMIEAIQAA"; // <GPGSID>
+        public const string achievement_onlevel5 = "CgkI8-v75sMIEAIQAw"; // <GPGSID>
+        public const string leaderboard_hscoreborad = "CgkI8-v75sMIEAIQAg"; // <GPGSID>
 
 }
 

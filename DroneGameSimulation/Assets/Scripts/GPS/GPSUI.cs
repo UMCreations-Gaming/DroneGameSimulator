@@ -1,29 +1,54 @@
 using GooglePlayGames;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class GPSUI : MonoBehaviour
 {
-    public void ShowAchievementsUI()
+
+    private int score = 0;
+    public Text pointsTxt ;
+    
+
+     
+
+      public void AddSCore()
     {
-        if (Social.localUser.authenticated)
-        {
-            Social.ShowAchievementsUI();
-        }
-        else
-        {
-            Debug.LogError("User not signed in.");
-        }
+        score++;
+        UpdatePointsText();
+        //GPSStarter.Instance.IncrementCounter();
     }
 
-    public void ShowLeaderboardsUI()
+    public void Restart()
     {
-        if (Social.localUser.authenticated)
-        {
-            Social.ShowLeaderboardUI();
-        }
-        else
-        {
-            Debug.LogError("User not signed in.");
-        }
+    
+        GPSStarter.AddScoreToLeaderboard(GPGSIds.leaderboard_hscoreborad, score);
+        score = 0;
+        UpdatePointsText();
+         
+    }
+
+    public void Increment()
+    { 
+        GPSStarter.IncrementAchievement(GPGSIds.achievement_onlevel5, 5);
+    }
+
+    public void Unlock()
+    {
+        GPSStarter.UnlockAchievement(GPGSIds.achievement_100coin);
+    }
+
+    public void ShowAchievements()
+    {
+        GPSStarter.ShowAchievementsUI();
+    }
+
+    public void ShowLeaderboards()
+    {
+        GPSStarter.ShowLeaderboardsUI();
+    }
+
+    public void UpdatePointsText()
+    {
+        pointsTxt.text = score.ToString();
     }
 }
